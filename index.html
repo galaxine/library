@@ -11,7 +11,53 @@
 </head>
 
 <body>
-    ASDFsldfjslk
+    <!-- First create the modal and see if you can make a form out of it with Javascritp stuff-->
+    <!-- We need a button firsts to call the modal-->
+    <button data-modal-target="#modal">Open Modal</button>
+    <div class="modal" id="modal">
+
+        <div class="modal-header">
+            <div class="title">Add a Book</div>
+            <!-- This times button is the same, scaling and putting it around takes alot of time -->
+            <button data-close-button class="close-button">&times;</button>
+        </div>
+
+        <div class="modal-body">
+
+            <!-- This is the form inside the modal body-->
+            <form>
+                <div>
+                    <label for="book-name">Enter your username:</label>
+                    <input type="text" id="book-name" required>
+                </div>
+                <div>
+                    <label for="author-name">Enter the bookname</label>
+                    <input id="author-name" type="text" required>
+                </div>
+                <div>
+                    <label for="pages">Enter the number of pages</label>
+                    <input id="pages" type="number" required>
+                </div>
+                <!-- a toggle switch doesn't exist as it is, we ned to implement it.-->
+                <div>
+                    <label class="switch" for="#read-status">Read</label>
+                    <input type="checkbox" id="read-status">
+                    <span class="slider round"></span>
+                </div>
+                <div>
+                    <button type="submit">Submit</button>
+                    <button type="reset">Reset</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <div id="overlay"></div>
+    <!--
+        Then start with a header, empty, a footer, empty and also the mainmenu where we will add "cards"
+    -->
+
+
 </body>
 
 </html>
