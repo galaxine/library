@@ -9,7 +9,7 @@ let library = [];
  * @param {Number} pages Pages
  * @param {Boolean} read already set to false, 
  */
-function Book(name, author, pages, read = false) {
+function Book(name, author, pages, read) {
     this.name = name;
     this.author = author;
     this.pages = pages;
@@ -17,12 +17,15 @@ function Book(name, author, pages, read = false) {
     this.info = function() {
         console.table([this.name, this.author, this.pages, this.read]);
     }
+    this.setRead = function() {
+        if (this.read == "on"){
+            this.read == true
+        } else{
+            this.read == false
+        }
+    }
 }
 
-
-let hobbits = new Book("The hobbits", "J.K.Cowlin", 328);
-let sexasutra = new Book("Sexasutra", "Nigga", 334);
-let fuckmeatCatalogue = new Book("The Encyclopedia of females selected and engineered for sexual and breeding purposes", "the science team", 328)
 
 /**
  * Add books to the library through a function
@@ -35,17 +38,13 @@ function addBooksToLibrary(name, author, pages, read) {
     }
 }
 
-library.push(hobbits);
-library.push(sexasutra);
-library.push(fuckmeatCatalogue);
-
 
 function loopThroughLibrary() {
     library.forEach(book => {
         book.info();
     });
 }
-console.log(loopThroughLibrary())
+//console.log(loopThroughLibrary())
 
 
 /* Modal part */
@@ -89,4 +88,25 @@ function closeModal(modal) {
 Getting the results of the modal.
 */
 
-const resultList = document.getElementById('results');
+let formElem = document.getElementById("form-elem");
+
+formElem.onsubmit = function (event){
+    event.preventDefault();
+    console.log(event.target.elements)
+    let title = event.target.elements[0];
+    let author = event.target.elements[1];
+    let pages = event.target.elements[2];
+    let read = event.target.elements[3];
+    
+    let addition = new Book(title.value, author.value, pages.value, read.value);
+    library.push(addition);
+    console.log("book is added")
+    //reset the targets.
+    title.value = ""
+    author.value = ""
+    pages.value = ""
+    read.checked = false;
+    
+    
+}
+
