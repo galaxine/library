@@ -4,6 +4,17 @@
     box-sizing: border-box;
 }
 
+
+html, body {
+ height: 100%;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+}
+
+
 .modal {
     position: fixed;
     top: 50%;
@@ -82,4 +93,22 @@
 #overlay.active {
     pointer-events: all;
     opacity: 1;
+}
+.grid-menu {
+    flex: 1 0 auto;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+
+
+.card {
+    max-width: 300px;
+    max-height: 150px;
+    background-color: grey;
+}
+
+.footer {
+    flex-shrink: 0;
 }
