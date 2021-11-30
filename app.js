@@ -17,11 +17,11 @@ function Book(name, author, pages, read) {
     this.info = function () {
         console.table([this.name, this.author, this.pages, this.read]);
     }
-    this.setRead = function () {
-        if (this.read == "on") {
-            this.read == true
+    this.toggle = function() {
+        if (this.read == "true") {
+            this.read == "false";
         } else {
-            this.read == false
+            this.read == "true";  
         }
     }
 }
@@ -99,16 +99,17 @@ formElem.onsubmit = function (event) {
     let title = event.target.elements[0];
     let author = event.target.elements[1];
     let pages = event.target.elements[2];
-    let read = event.target.elements[3];
+    let read = event.target.elements[3].checked;
+    console.log(typeof(read));
 
-    let addition = new Book(title.value, author.value, pages.value, read.value);
+    let addition = new Book(title.value, author.value, pages.value, read);
     library.push(addition);
     console.log("book is added")
     //reset the targets.
     title.value = ""
     author.value = ""
     pages.value = ""
-    read.checked = false;
+    read.value = "off";
     gridMenu.append(
         createAndInsertToCard(
             addition.name, addition.author, addition.pages, addition.read));
@@ -130,15 +131,28 @@ function createAndInsertToCard(name, author, pages, read) {
     let cardTitle = document.createElement("div");
     let cardAuthor = document.createElement("div");
     let cardPages = document.createElement("div");
-    let cardRead = document.createElement("div");
+    let cardReadParent = document.createElement("div");
+    let cardReadText = document.createElement("div");
+    let cardRead = document.createElement("button");
+    if (read == true) {
+        cardRead.dataset.read = read;
+        cardRead.innerHTML = "Read";
+        cardRead.style.backgroundColor = "green";
+    } else {
+        cardRead.dataset.read = read;
+        cardRead.innerHTML = "Not Read";
+        cardRead.style.backgroundColor = "salmon";
+    }
+    cardReadParent.append(cardReadText, cardRead);
+    cardReadParent.style.display = "flex";
     let button = document.createElement("button");
-    cardTitle.innerHTML = `${name}`;
-    cardAuthor.innerHTML = `${author}`;
-    cardPages.innerHTML = `${pages}`;
-    cardRead.innerHTML = `${read}`;
+    cardTitle.innerHTML = `Book Title:\n${name}`;
+    cardAuthor.innerHTML = `Author:\n${author}`;
+    cardPages.innerHTML = `Pages:\n${pages}`;
+    cardReadText.innerHTML= "Read: \n"
     button.innerHTML = "remove";
     button.setAttribute("type", "submit");
-    card.append(cardTitle, cardAuthor, cardPages, cardRead, button);
+    card.append(cardTitle, cardAuthor, cardPages, cardReadParent, button);
     return card;
 }
 /**
@@ -173,5 +187,15 @@ gridMenu.onclick = function (event) {
             gridMenu.lastChild.dataset.bookNr = library.indexOf(book);
             gridMenu.lastChild.lastChild.dataset.bookNr = library.indexOf(book);
         });
+    } else if (clicked.hasAttributes("data-read")){
+        if(clicked.dataset.read == "true"){
+            clicked.dataset.read = "false";
+            clicked.style.backgroundColor = "salmon";
+            clicked.innerHTML = "not Read";
+        } else if (clicked.dataset.read == "false") {
+            clicked.dataset.read = "false";
+            clicked.style.backgroundColor = "green";
+            clicked.innerHTML = "Read";
+        }
     }
 }
