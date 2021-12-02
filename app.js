@@ -18,10 +18,10 @@ function Book(name, author, pages, read) {
         console.table([this.name, this.author, this.pages, this.read]);
     }
     this.toggle = function() {
-        if (this.read == "true") {
-            this.read == "false";
+        if (this.read == true) {
+            this.read == false;
         } else {
-            this.read == "true";  
+            this.read == true;  
         }
     }
 }
@@ -100,7 +100,6 @@ formElem.onsubmit = function (event) {
     let author = event.target.elements[1];
     let pages = event.target.elements[2];
     let read = event.target.elements[3].checked;
-    console.log(typeof(read));
 
     let addition = new Book(title.value, author.value, pages.value, read);
     library.push(addition);
@@ -134,15 +133,18 @@ function createAndInsertToCard(name, author, pages, read) {
     let cardReadParent = document.createElement("div");
     let cardReadText = document.createElement("div");
     let cardRead = document.createElement("button");
+    
+    //add data attribute to the 
+    cardRead.dataset.read = read;
+    cardRead.dataset.readNr = library.length - 1;
     if (read == true) {
-        cardRead.dataset.read = read;
         cardRead.innerHTML = "Read";
         cardRead.style.backgroundColor = "green";
     } else {
-        cardRead.dataset.read = read;
         cardRead.innerHTML = "Not Read";
         cardRead.style.backgroundColor = "salmon";
     }
+
     cardReadParent.append(cardReadText, cardRead);
     cardReadParent.style.display = "flex";
     let button = document.createElement("button");
@@ -164,7 +166,7 @@ gridMenu.onclick = function (event) {
     let clicked = event.target;
     let cards = gridMenu.children;
     // use library as index and go through the for loop of the cards
-    if (clicked.hasAttributes("data-book-nr")) {
+    if (clicked.dataset.bookNr) {
         for (let index = 0; index < cards.length; index++) {
             if (clicked.dataset["bookNr"] === cards[index].dataset["bookNr"]) {
                 console.log(library[index].info())
@@ -189,11 +191,13 @@ gridMenu.onclick = function (event) {
         });
     } else if (clicked.hasAttributes("data-read")){
         if(clicked.dataset.read == "true"){
-            clicked.dataset.read = "false";
+            clicked.dataset.read = false;
+            library[clicked.dataset.readNr].toggle()
             clicked.style.backgroundColor = "salmon";
             clicked.innerHTML = "not Read";
         } else if (clicked.dataset.read == "false") {
-            clicked.dataset.read = "false";
+            clicked.dataset.read = true;
+            library[clicked.dataset.readNr].toggle()
             clicked.style.backgroundColor = "green";
             clicked.innerHTML = "Read";
         }
