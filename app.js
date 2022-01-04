@@ -9,20 +9,22 @@ let library = [];
  * @param {Number} pages Pages
  * @param {Boolean} read already set to false, 
  */
-function Book(name, author, pages, read) {
-    this.name = name;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-    this.info = function () {
-        console.table([this.name, this.author, this.pages, this.read]);
-    }
-    this.toggle = function() {
-        if (this.read == true) {
-            this.read == false;
-        } else {
-            this.read == true;  
-        }
+class Book {
+    constructor(name, author, pages, read) {
+        this.name = name;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+        this.info = function () {
+            console.table([this.name, this.author, this.pages, this.read]);
+        };
+        this.toggle = function () {
+            if (this.read == true) {
+                this.read == false;
+            } else {
+                this.read == true;
+            }
+        };
     }
 }
 
